@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:tracking="http://www.mulesoft.org/schema/mule/ee/tracking" xmlns:json="http://www.mulesoft.org/schema/mule/json" xmlns:context="http://www.springframework.org/schema/context" 
+	xmlns:vm="http://www.mulesoft.org/schema/mule/vm" 
+	xmlns:insightly="http://www.mulesoft.org/schema/mule/insightly"
+	xmlns:http="http://www.mulesoft.org/schema/mule/http" 
+	xmlns="http://www.mulesoft.org/schema/mule/core" 
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xmlns:spring="http://www.springframework.org/schema/beans" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.mulesoft.org/schema/mule/vm http://www.mulesoft.org/schema/mule/vm/current/mule-vm.xsd
+http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-current.xsd
+http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+http://www.mulesoft.org/schema/mule/insightly http://www.mulesoft.org/schema/mule/insightly/current/mule-insightly.xsd
+http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-current.xsd
+http://www.mulesoft.org/schema/mule/json http://www.mulesoft.org/schema/mule/json/current/mule-json.xsd
+http://www.mulesoft.org/schema/mule/ee/tracking http://www.mulesoft.org/schema/mule/ee/tracking/current/mule-tracking-ee.xsd">
+    
+    <context:property-placeholder location="automation-credentials.properties"/>
+    
+    <insightly:config name="Insightly__Config" 
+    	username="${insightly.http.user}" 
+    	password="${insightly.http.password}"
+    	host="${insightly.http.host}" 
+    	port="${insightly.http.port}" 
+    	basePath="${insightly.http.basepath}" 
+    	doc:name="Insightly: Config"/>
+    	    
+    <flow name="test-retrieve-flow">
+    	<vm:inbound-endpoint  doc:name="VM" exchange-pattern="request-response" path="test.retrieve.in"/>
+        <insightly:retreive config-ref="Insightly__Config" doc:name="Insightly"  resourceName="Contacts" resourceId="#[payload]"/>
+    </flow>
+    <flow name="test-retrieve-by-query-flow">
+        <vm:inbound-endpoint exchange-pattern="request-response" path="test.retrievebyquery.in" doc:name="VM"/>
+        <insightly:retrieve-by-query config-ref="Insightly__Config" resourceKey="#[payload.resourceKey]" resourceValue="#[payload.resourceValue]" resourceName="Projects" doc:name="Insightly"/>
+    </flow>
+    <flow name="test-create-flow">
+        <vm:inbound-endpoint exchange-pattern="request-response" path="test.create.in" doc:name="VM"/>
+        <insightly:create config-ref="Insightly__Config" resourceName="Contacts" doc:name="Insightly"/>
+    </flow>
+    <flow name="test-update-flow">
+        <vm:inbound-endpoint exchange-pattern="request-response" path="test.update.in" doc:name="VM"/>
+        <insightly:update config-ref="Insightly__Config" resourceName="Contacts" doc:name="Insightly"/>
+    </flow>
+    <flow name="test-delete-flow">
+        <vm:inbound-endpoint exchange-pattern="request-response" path="test.delete.in" doc:name="VM"/>
+        <insightly:delete config-ref="Insightly__Config" resourceId="#[payload]" resourceName="Contacts" doc:name="Insightly"/>
+    </flow>
+    <flow name="test-retrieve-contacts-flow">
+        <vm:inbound-endpoint exchange-pattern="request-response" path="test.retrieve.contacts.in" doc:name="VM"/>
+        <insightly:retrieve-contacts config-ref="Insightly__Config" ids="#[payload.ids]" email="#[payload.email]" resourceName="Contacts" doc:name="Insightly"/>
+    </flow>
+</mule>

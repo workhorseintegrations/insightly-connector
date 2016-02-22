@@ -1,0 +1,9 @@
+<!-- BEGIN_INCLUDE(insightly:retreive) -->
+    <insightly:retreive config-ref="" doc:name="Insightly" resourceId="#[resourceId]" resourceName="Contacts"/>
+<!-- END_INCLUDE(insightly:retreive) -->
+<!-- BEGIN_INCLUDE(insightly:retrieve-by-query) -->
+    <insightly:retrieve-by-query config-ref="" resourceKey="tag" resourceValue="Projects" resourceName="Contacts" doc:name="Insightly"/>
+<!-- END_INCLUDE(insightly:retrieve-by-query) -->
+<!-- BEGIN_INCLUDE(insightly:update) -->
+    <insightly:update config-ref="" resourceName="Contacts" doc:name="Insightly"/>
+<!-- END_INCLUDE(insightly:update) -->
