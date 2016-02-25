@@ -29,7 +29,7 @@ http://www.mulesoft.org/schema/mule/ee/tracking http://www.mulesoft.org/schema/m
     	    
     <flow name="test-retrieve-flow">
     	<vm:inbound-endpoint  doc:name="VM" exchange-pattern="request-response" path="test.retrieve.in"/>
-        <insightly:retreive config-ref="Insightly__Config" doc:name="Insightly"  resourceName="Contacts" resourceId="#[payload]"/>
+        <insightly:retreive config-ref="Insightly__Config" resourceId="#[payload]" resourceName="Contacts" doc:name="Insightly"/>
     </flow>
     <flow name="test-retrieve-by-query-flow">
         <vm:inbound-endpoint exchange-pattern="request-response" path="test.retrievebyquery.in" doc:name="VM"/>

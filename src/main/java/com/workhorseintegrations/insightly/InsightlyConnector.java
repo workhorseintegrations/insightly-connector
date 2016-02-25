@@ -7,10 +7,6 @@ import org.mule.api.annotations.Processor;
 
 import java.io.IOException;
 
-import javax.xml.bind.annotation.XmlEnum;
-import javax.xml.bind.annotation.XmlEnumValue;
-import javax.xml.bind.annotation.XmlType;
-
 import org.mule.api.annotations.ReconnectOn;
 import org.mule.api.annotations.display.FriendlyName;
 import org.mule.api.annotations.display.Placement;
@@ -22,6 +18,7 @@ import org.mule.api.annotations.rest.RestCall;
 import org.mule.api.annotations.rest.RestUriParam;
 
 import com.workhorseintegrations.insightly.config.ConnectorConfig;
+import com.workhorseintegrations.insightly.util.InsightlyResourceName;
 
 @SuppressWarnings("deprecation")
 @Connector(name="insightly", friendlyName="Insightly")
@@ -78,8 +75,8 @@ public abstract class InsightlyConnector
 
 
     /**
-     * Retrieve message processor to retrieve Project/Contact/Organization information from Insightly for a resource id. 
-     *
+     * Retrieve message processor to retrieve Project/Contact/Organization information from Insightly for a resource id.
+     * 
      * @param resourceName	InsightlyResourceName object containing the name of the resource.
      * @param resourceId	String value of the id.
      * @return A String value(JSON format) with the retrieved information from Insightly.
@@ -118,7 +115,7 @@ public abstract class InsightlyConnector
 
     /**
      * Create message processor to create Project/Contact/Organization information in Insightly.
-     *
+     * 
      * @param resourceName	InsightlyResourceName object containing the name of the resource to be created.
      * @param payload	String value(JSON Format) to be created.
      * @return A String value(JSON Format) with the status of the create.
@@ -129,7 +126,7 @@ public abstract class InsightlyConnector
     public abstract String create(@RestUriParam("resourceName") InsightlyResourceName resourceName, @Payload String payload) throws IOException;
 
     /**
-     * RetrieveContacts message processor to retrieve Contact information from Insightly for a id, email and tag.
+     * RetrieveContacts message processor to retrieve Contact information from Insightly for an id, email and tag.
      *
      * @param resourceName	InsightlyResourceName object containing the name of the resource.
      * @param ids	String value of comma-separated list of Contact Ids, maximum 200, 1st order of precedence.
@@ -144,7 +141,7 @@ public abstract class InsightlyConnector
 
     /**
      * Delete message processor to delete Project/Contact/Organization information from Insightly for a resourceId.
-     *
+     * 
      * @param resourceName InsightlyResourceName object containing the name of the resource to be deleted.
      * @param resourceId	String value of the resourceId.
      * @return A String value(JSON format) with the status of delete.
@@ -259,37 +256,4 @@ public abstract class InsightlyConnector
 	{
 		this.address = address;
 	}
-    
-    /**
-     * InsightlyResourceName will have enum values of Projects/Organizations/Contacts to use in the message processors
-     * @author mbrigilin
-     *
-     */
-    @XmlType
-    @XmlEnum(String.class)
-    public enum InsightlyResourceName
-    {
-    	/**
-    	 * Set to Projects when the request is to retrieve/update project information from insightly
-    	 */
-        @XmlEnumValue("Projects") Projects,
-    	/**
-    	 * Set to Organizations when the request is to retrieve/update organization information from insightly
-    	 */
-        @XmlEnumValue("Organisations") Organisations,
-    	/**
-    	 * Set to Contacts when the request is to retrieve/update contact information from insightly
-    	 */
-        @XmlEnumValue("Contacts") Contacts;
-
-        public String value()
-        {
-            return name();
-        }
-
-        public static InsightlyResourceName fromValue(String v)
-        {
-            return valueOf(v);
-        }
-    }
 }
