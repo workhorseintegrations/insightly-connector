@@ -100,20 +100,6 @@ public abstract class InsightlyConnector
     public abstract String update(@RestUriParam("resourceName")InsightlyResourceName resourceName, @Payload String payload) throws IOException;
 
     /**
-     * RetrieveByQuery message processor to retrieve Project/Contact/Organization information from Insightly for a resource key and value.
-     *
-     * @param resourceName	InsightlyResourceName object containing the name of the resource.
-     * @param resourceKey	String value of the key for which information is queried.
-     * @param resourceValue	String value of the value for which information is queried.
-     * @return A String value(JSON format) with the retrieved information from Insightly.
-     * @throws IOException
-     */
-    @Processor
-    @RestCall(uri="https://{generatedUrl}/{resourceName}?{resourceKey}={resourceValue}", method=HttpMethod.GET, contentType="application/json")
-    public abstract String retrieveByQuery(@RestUriParam("resourceName")InsightlyResourceName resourceName, @RestUriParam("resourceKey")String resourceKey, @RestUriParam("resourceValue")String resourceValue) throws IOException;
-
-
-    /**
      * Create message processor to create Project/Contact/Organization information in Insightly.
      * 
      * @param resourceName	InsightlyResourceName object containing the name of the resource to be created.
@@ -161,7 +147,7 @@ public abstract class InsightlyConnector
     
     @Processor
     @RestCall(uri="https://{generatedUrl}/{resourceName}?ids={ids}&email={email}&domain={domain}&tag={tag}", method=HttpMethod.GET)
-    public abstract String retrieveOrganisations(@RestUriParam("resourceName") String resourceName, @RestUriParam("ids") @Optional String ids, @RestUriParam("email") @Optional String email, @RestUriParam("tag") @Optional String tag, @RestUriParam("domain") @Optional String domain) throws IOException;
+    public abstract String retrieveOrganizations(@RestUriParam("resourceName") String resourceName, @RestUriParam("ids") @Optional String ids, @RestUriParam("email") @Optional String email, @RestUriParam("tag") @Optional String tag, @RestUriParam("domain") @Optional String domain) throws IOException;
     
     @Processor
     @RestCall(uri="https://{generatedUrl}/{resourceName}?ids={ids}&tag={tag}", method=HttpMethod.GET)
