@@ -151,6 +151,22 @@ public abstract class InsightlyConnector
     @RestCall(uri="https://{generatedUrl}/{resourceName}/{resourceId}", method=HttpMethod.DELETE)
     public abstract String delete(@RestUriParam("resourceName") InsightlyResourceName resourceName, @RestUriParam("resourceId") String resourceId) throws IOException;
     
+    @Processor
+    @RestCall(uri="https://{generatedUrl}/{resourceName}?ids={ids}&email={email}&tag={tag}&includeConverted={includeConverted}", method=HttpMethod.GET)
+    public abstract String retrieveLeads(@RestUriParam("resourceName") String resourceName, @RestUriParam("ids") @Optional String ids, @RestUriParam("email") @Optional String email, @RestUriParam("tag") @Optional String tag, @RestUriParam("includeConverted") @Default("false") Boolean includeConverted) throws IOException;
+    
+    @Processor
+    @RestCall(uri="https://{generatedUrl}/{resourceName}?ids={ids}&email={email}&tag={tag}", method=HttpMethod.GET)
+    public abstract String retrieveOpportunities(@RestUriParam("resourceName") String resourceName, @RestUriParam("ids") @Optional String ids, @RestUriParam("email") @Optional String email, @RestUriParam("tag") @Optional String tag) throws IOException;
+    
+    @Processor
+    @RestCall(uri="https://{generatedUrl}/{resourceName}?ids={ids}&email={email}&domain={domain}&tag={tag}", method=HttpMethod.GET)
+    public abstract String retrieveOrganisations(@RestUriParam("resourceName") String resourceName, @RestUriParam("ids") @Optional String ids, @RestUriParam("email") @Optional String email, @RestUriParam("tag") @Optional String tag, @RestUriParam("domain") @Optional String domain) throws IOException;
+    
+    @Processor
+    @RestCall(uri="https://{generatedUrl}/{resourceName}?ids={ids}&tag={tag}", method=HttpMethod.GET)
+    public abstract String retrieveProjects(@RestUriParam("resourceName") String resourceName, @RestUriParam("ids") @Optional String ids, @RestUriParam("tag") @Optional String tag) throws IOException;
+    
 	/**
 	 * @return the config
 	 */

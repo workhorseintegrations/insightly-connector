@@ -13,7 +13,7 @@ import org.mule.api.annotations.rest.BasicAuthUsername;
 public class ConnectorConfig
 {
 	/**
-     * Username to authenticate in insightly.
+     * Username to authenticate in insightly. This will be the API key that is associated with your Insightly account.
      */
 	@Configurable
     @Placement(group="Security Configuration", order=1)
@@ -21,7 +21,7 @@ public class ConnectorConfig
 	private String username;
 
 	/**
-     * Password to authenticate in insightly.
+     * Password to authenticate in insightly. This is to be left as a BLANK string.
      */
 	@BasicAuthPassword
     @Placement(group="Security Configuration", order=2)
