@@ -122,8 +122,8 @@ public abstract class InsightlyConnector
      * @throws IOException
      */
     @Processor
-    @RestCall(uri="https://{generatedUrl}/{resourceName}?ids={ids}&email={email}&tag={tag}", method=HttpMethod.GET)
-    public abstract String retrieveContacts(@RestUriParam("resourceName") InsightlyResourceName resourceName, @RestUriParam("ids") @Optional String ids, @RestUriParam("email") @Optional String email, @RestUriParam("tag") @Optional String tag) throws IOException;
+    @RestCall(uri="https://{generatedUrl}/Contacts?ids={ids}&email={email}&tag={tag}", method=HttpMethod.GET)
+    public abstract String retrieveContacts(@RestUriParam("ids") @Optional String ids, @RestUriParam("email") @Optional String email, @RestUriParam("tag") @Optional String tag) throws IOException;
 
     /**
      * Delete message processor to delete Project/Contact/Organization information from Insightly for a resourceId.
@@ -138,20 +138,24 @@ public abstract class InsightlyConnector
     public abstract String delete(@RestUriParam("resourceName") InsightlyResourceName resourceName, @RestUriParam("resourceId") String resourceId) throws IOException;
     
     @Processor
-    @RestCall(uri="https://{generatedUrl}/{resourceName}?ids={ids}&email={email}&tag={tag}&includeConverted={includeConverted}", method=HttpMethod.GET)
-    public abstract String retrieveLeads(@RestUriParam("resourceName") String resourceName, @RestUriParam("ids") @Optional String ids, @RestUriParam("email") @Optional String email, @RestUriParam("tag") @Optional String tag, @RestUriParam("includeConverted") @Default("false") Boolean includeConverted) throws IOException;
+    @RestCall(uri="https://{generatedUrl}/Leads?ids={ids}&email={email}&tag={tag}&includeConverted={includeConverted}", method=HttpMethod.GET)
+    public abstract String retrieveLeads(@RestUriParam("ids") @Optional String ids, @RestUriParam("email") @Optional String email, @RestUriParam("tag") @Optional String tag, @RestUriParam("includeConverted") @Default("false") Boolean includeConverted) throws IOException;
     
     @Processor
-    @RestCall(uri="https://{generatedUrl}/{resourceName}?ids={ids}&email={email}&tag={tag}", method=HttpMethod.GET)
-    public abstract String retrieveOpportunities(@RestUriParam("resourceName") String resourceName, @RestUriParam("ids") @Optional String ids, @RestUriParam("email") @Optional String email, @RestUriParam("tag") @Optional String tag) throws IOException;
+    @RestCall(uri="https://{generatedUrl}/Opportunities?ids={ids}&email={email}&tag={tag}", method=HttpMethod.GET)
+    public abstract String retrieveOpportunities(@RestUriParam("ids") @Optional String ids, @RestUriParam("email") @Optional String email, @RestUriParam("tag") @Optional String tag) throws IOException;
     
     @Processor
-    @RestCall(uri="https://{generatedUrl}/{resourceName}?ids={ids}&email={email}&domain={domain}&tag={tag}", method=HttpMethod.GET)
-    public abstract String retrieveOrganizations(@RestUriParam("resourceName") String resourceName, @RestUriParam("ids") @Optional String ids, @RestUriParam("email") @Optional String email, @RestUriParam("tag") @Optional String tag, @RestUriParam("domain") @Optional String domain) throws IOException;
+    @RestCall(uri="https://{generatedUrl}/Organisations?ids={ids}&email={email}&domain={domain}&tag={tag}", method=HttpMethod.GET)
+    public abstract String retrieveOrganizations(@RestUriParam("ids") @Optional String ids, @RestUriParam("email") @Optional String email, @RestUriParam("tag") @Optional String tag, @RestUriParam("domain") @Optional String domain) throws IOException;
     
     @Processor
-    @RestCall(uri="https://{generatedUrl}/{resourceName}?ids={ids}&tag={tag}", method=HttpMethod.GET)
-    public abstract String retrieveProjects(@RestUriParam("resourceName") String resourceName, @RestUriParam("ids") @Optional String ids, @RestUriParam("tag") @Optional String tag) throws IOException;
+    @RestCall(uri="https://{generatedUrl}/Projects?ids={ids}&tag={tag}", method=HttpMethod.GET)
+    public abstract String retrieveProjects(@RestUriParam("ids") @Optional String ids, @RestUriParam("tag") @Optional String tag) throws IOException;
+    
+    @Processor
+    @RestCall(uri="https://{generatedUrl}/{resourceName}", method=HttpMethod.GET)
+    public abstract String retreiveAll(@RestUriParam("resourceName") InsightlyResourceName resourceName) throws IOException;
     
 	/**
 	 * @return the config
