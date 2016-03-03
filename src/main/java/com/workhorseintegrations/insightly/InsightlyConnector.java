@@ -85,7 +85,7 @@ public abstract class InsightlyConnector
 	@Processor
     @ReconnectOn(exceptions = { Exception.class })
     @RestCall(uri="https://{generatedUrl}/{resourceName}/{resourceId}", method=HttpMethod.GET, contentType="application/json")
-    public abstract String retreive(@RestUriParam("resourceName") InsightlyResourceName resourceName, @RestUriParam("resourceId") String resourceId) throws IOException;
+    public abstract String retrieve(@RestUriParam("resourceName") InsightlyResourceName resourceName, @RestUriParam("resourceId") String resourceId) throws IOException;
 
     /**
      * Update message processor to update Project/Contact/Organization information in Insightly.
@@ -137,25 +137,68 @@ public abstract class InsightlyConnector
     @RestCall(uri="https://{generatedUrl}/{resourceName}/{resourceId}", method=HttpMethod.DELETE)
     public abstract String delete(@RestUriParam("resourceName") InsightlyResourceName resourceName, @RestUriParam("resourceId") String resourceId) throws IOException;
     
+    /**
+     * RetrieveLeads message processor to retrieve Lead information from Insightly for an id, email, tag and if it is converted.
+     *
+     * @param ids	String value of comma-separated list of Lead Ids, maximum 200, 1st order of precedence.
+     * @param email	String value of email address, 2nd order of precedence.
+     * @param tag	String value of a single tag, 3rd order of precedence.
+     * @param includeConverted By default converted leads are not included, pass in "true" to include them in the response.
+     * @return A list of Leads(JSON format).
+     * @throws IOException
+     */
     @Processor
     @RestCall(uri="https://{generatedUrl}/Leads?ids={ids}&email={email}&tag={tag}&includeConverted={includeConverted}", method=HttpMethod.GET)
     public abstract String retrieveLeads(@RestUriParam("ids") @Optional String ids, @RestUriParam("email") @Optional String email, @RestUriParam("tag") @Optional String tag, @RestUriParam("includeConverted") @Default("false") Boolean includeConverted) throws IOException;
     
+    /**
+     * RetrieveOpportunities message processor to retrieve Opportunity information from Insightly for an id, email and tag.
+     *
+     * @param ids	String value of comma-separated list of Opportunity Ids, maximum 200, 1st order of precedence.
+     * @param email	String value of email address, 2nd order of precedence.
+     * @param tag	String value of a single tag, 3rd order of precedence.
+     * @return A list of Opportunities(JSON format).
+     * @throws IOException
+     */
     @Processor
     @RestCall(uri="https://{generatedUrl}/Opportunities?ids={ids}&email={email}&tag={tag}", method=HttpMethod.GET)
     public abstract String retrieveOpportunities(@RestUriParam("ids") @Optional String ids, @RestUriParam("email") @Optional String email, @RestUriParam("tag") @Optional String tag) throws IOException;
     
+    /**
+     * RetrieveOrganizations message processor to retrieve Organization information from Insightly for an id, domain and tag.
+     *
+     * @param ids	String value of comma-separated list of Organization Ids, maximum 200, 1st order of precedence.
+     * @param domain	String value of email domain, 2nd order of precedence.
+     * @param tag	String value of a single tag, 3rd order of precedence.
+     * @return A list of Organizations(JSON format).
+     * @throws IOException
+     */
     @Processor
-    @RestCall(uri="https://{generatedUrl}/Organisations?ids={ids}&email={email}&domain={domain}&tag={tag}", method=HttpMethod.GET)
-    public abstract String retrieveOrganizations(@RestUriParam("ids") @Optional String ids, @RestUriParam("email") @Optional String email, @RestUriParam("tag") @Optional String tag, @RestUriParam("domain") @Optional String domain) throws IOException;
+    @RestCall(uri="https://{generatedUrl}/Organisations?ids={ids}&domain={domain}&tag={tag}", method=HttpMethod.GET)
+    public abstract String retrieveOrganizations(@RestUriParam("ids") @Optional String ids, @RestUriParam("tag") @Optional String tag, @RestUriParam("domain") @Optional String domain) throws IOException;
     
+    /**
+     * RetrieveProjects message processor to retrieve Project information from Insightly for an id and tag.
+     *
+     * @param ids	String value of comma-separated list of Organization Ids, maximum 200, 1st order of precedence.
+     * @param tag	String value of a single tag, 2nd order of precedence.
+     * @return A list of Projects(JSON format).
+     * @throws IOException
+     */
     @Processor
     @RestCall(uri="https://{generatedUrl}/Projects?ids={ids}&tag={tag}", method=HttpMethod.GET)
     public abstract String retrieveProjects(@RestUriParam("ids") @Optional String ids, @RestUriParam("tag") @Optional String tag) throws IOException;
     
+    /**
+     * RetrieveAll message processor to retrieve all records from a specific resource from Insightly.
+     *
+     * @param resourceName InsightlyResourceName object containing the name of the resource to be retrieved.
+     * @return A list of Projects(JSON format).
+     * @throws IOException
+     */
     @Processor
     @RestCall(uri="https://{generatedUrl}/{resourceName}", method=HttpMethod.GET)
-    public abstract String retreiveAll(@RestUriParam("resourceName") InsightlyResourceName resourceName) throws IOException;
+    public abstract String retrieveAll(@RestUriParam("resourceName") InsightlyResourceName resourceName) throws IOException;
     
 	/**
 	 * @return the config
